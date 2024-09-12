@@ -32,7 +32,8 @@ def start(message):
         
 def branches(message):
     if message.text == 'Ввести пациента':
-        pass
+        bot.send_message(message.chat.id, 'Введите фамилию: ')    
+        bot.register_next_step_handler(message, get_lastname)
     
     elif message.text == 'Получить список пациентов за сегодня':
         pass
@@ -43,6 +44,50 @@ def branches(message):
     else:
         bot.send_message(message.chat.id, 'Выберите одну из опций!༼ つ ◕_◕ ༽つ')
         bot.register_next_step_handler(message, branches)
+
+
+
+def is_validate_string(word: str) -> bool:
+    s = "1234567890{[}]'?$^=<>,:.;!_*+()/#%&"
+    for char in s:
+        if char in word:
+            return False
+        
+    return True
+
+
+def get_lastname(message):
+    global lastname
+    if(is_validate_string(message.text)):
+        lastname = message.text
+        bot.send_message(message.chat.id, 'Введите Имя: ')
+        bot.register_next_step_handler(message, get_name)
+    else:
+        bot.send_message(message.chat.id, 'Введите фамилию: ')
+        bot.register_next_step_handler(message, get_lastname)
+
+
+def get_name(message):
+    global name
+    if(is_validate_string(message.text)):
+        name = message.text
+        bot.send_message(message.chat.id, 'Введите Отчество: ')
+        bot.register_next_step_handler(message, get_surname)
+    else:
+    
+        bot.send_message(message.chat.id, 'Введите Имя: ')
+        bot.register_next_step_handler(message, get_name)
+    
+    
+def get_surname(message):
+    global surname
+    if(is_validate_string(message.text)):
+        surname = message.text
+        # bot.send_message(message.chat.id, 'Введите Отчество: ')
+        # bot.register_next_step_handler(message, is_that)
+    else:
+        bot.send_message(message.chat.id, 'Введите Отчество: ')
+        bot.register_next_step_handler(message, get_surname)    
 
 
 bot.polling(non_stop=True)
