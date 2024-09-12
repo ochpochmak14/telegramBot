@@ -1,4 +1,5 @@
 import telebot
+import sqlite3
 from telebot import types
 from datetime import date
 import os
@@ -26,7 +27,22 @@ def start(message):
     markup.row(name_list)
     
     bot.send_message(message.chat.id,'Держите список функций!', reply_markup=markup)
+    bot.register_next_step_handler(message, branches)
 
+        
+def branches(message):
+    if message.text == 'Ввести пациента':
+        pass
+    
+    elif message.text == 'Получить список пациентов за сегодня':
+        pass
+    
+    elif message.text == 'Получить список за каждый день недели':
+        pass
+    
+    else:
+        bot.send_message(message.chat.id, 'Выберите одну из опций!༼ つ ◕_◕ ༽つ')
+        bot.register_next_step_handler(message, branches)
 
 
 bot.polling(non_stop=True)
