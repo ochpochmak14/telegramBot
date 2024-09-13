@@ -5,7 +5,6 @@ from datetime import date
 import os
 from dotenv import load_dotenv
 from isvalid_isthat_func import *
-from db import *
 load_dotenv()
 
 My_Token = os.getenv('TOKEN')
