@@ -1,10 +1,12 @@
 import telebot
 import sqlite3
+import os
+
 from telebot import types
 from datetime import date
-import os
 from dotenv import load_dotenv
 from isvalid_isthat_func import *
+
 load_dotenv()
 
 My_Token = os.getenv('TOKEN')
@@ -191,10 +193,6 @@ def callback_one(message):
         
     else:
         bot.send_message(message.chat.id, 'OK')
-        # my_d["users"][str(message.chat.id)].append({
-        #     str(cur_weekday) : []
-        #     str(dtoday) : []
-        # })
         bot.send_message(message.chat.id, 'Введите дату рождения в формате ГГ.ДД.ММ')
         bot.register_next_step_handler(message, get_date)
     
@@ -219,7 +217,6 @@ def callback_two(message):
         markup002.add(btn1)
         bot.send_message(message.chat.id, 'OK', reply_markup=markup002)
         
-        # my_d[user_id]["todat"].append([lastname,name,surname,birth_date])
         
         bot.register_next_step_handler(message, start)
         
